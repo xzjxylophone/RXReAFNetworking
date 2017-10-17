@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "ReAFQueryStringPair.h"
+#import <AFNetworking.h>
 @interface MainViewController ()
 
 @end
@@ -75,6 +76,28 @@
 
 
 
+- (void)test_Http_post_001
+{
+//    NSString *str = @"http://api.hiexhibition.com/v1/homepage";
+    
+    NSString *base = @"http://api.hiexhibition.com";
+    NSString *info = @"v1/homepage";
+    AFHTTPSessionManager *httpSessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:base]];
+    [httpSessionManager POST:info parameters:nil progress:^(NSProgress * progress) {
+        NSLog(@"progress");
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"success:responseObject:%@", responseObject);
+    } failure:^(NSURLSessionDataTask *task, NSError * error) {
+        NSLog(@"failed:%@", error);
+    }];
+    
+    
+    
+}
+
+
+
+
 
 
 
@@ -88,7 +111,8 @@
     __weak __typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         sleep(2);
-        [weakSelf test_AcceptLanguages];
+//        [weakSelf test_AcceptLanguages];
+        [weakSelf test_Http_post_001];
     });
     
 }
